@@ -10,5 +10,6 @@ class Rectangle extends Shape{
         ctx.rect(this.x, this.y, this.w, this.h);
         ctx.fillStyle = this.color;
         ctx.fill();
+        ctx.closePath();
     }
 }
