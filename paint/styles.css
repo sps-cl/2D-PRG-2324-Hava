@@ -1,0 +1,15 @@
+canvas{
+    border-radius: 5px;
+    box-shadow: 0 0 5px 2px #292929;
+}
+.button-container{
+    display: flex;
+}
+input, label{
+    margin: 1em;
+    padding: 0.3em;
+    border-radius: 0.7em;
+    font-family: monospace;
+    font-weight: bold;
+    vertical-align:baseline;
+}

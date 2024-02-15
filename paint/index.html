@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <script src="double_ended_queue.js"></script>
+        <script src="main.js" defer></script>
+        
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <div class="button-container">
+            <input type="button" value="Obdélník" onclick="draw_rectangle()">
+            <input type="button" value="Kruh" onclick="draw_circle()">
+            <input type="button" value="Čára" onclick="draw_line()">
+            <label for="stroke-color">Barva obtažení</label>
+            <input id="stroke-color" type="color" onchange="set_stroke_color(this.value)">
+            <label for="fill-color">Barva výplně</label>
+            <input id="fill-color" type="color" onchange="set_fill_color(this.value)">
+            <label for="stroke-size">Šířka obtažení</label>
+            <input id="stroke-size" type="range" min="1" max="20" value="1" onchange="set_stroke_width(this.value)">
+        </div>
+        <canvas width="900" height="500" id="canvas"></canvas>
+    </body>
+</html>
