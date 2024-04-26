@@ -72,6 +72,8 @@ class PathMap {
         this.#drawCell(this.target, 'green');
 
         document.body.appendChild(this.canvas);
+
+        this.drawPath();
     }
 
     #addWall(x, y) {
@@ -148,34 +150,24 @@ class PathMap {
     }
 
     findPath() {
-        let cellList = [];
-        cellList.push(this.start);
+        let cellHeap = new BinaryHeap(this.width * this.height);
+        cellHeap.add(this.start);
         let closedCells = new Set();
-        while(cellList.length > 0) {
-            let bestCell = cellList[0];//proměnná ve které bude uložena nejvýhodnější buňka
-            let bestIndex = 0;//pozice nejvýhodnější buňky v seznamu přístupných buňek
-            for (let i = 1; i < cellList.length; i++) {//cyklus zjišťující, která buňky je tou nejbližší
-                if (bestCell.compareTo(cellList[i]) > 0) {
-                    bestCell = cellList[i];
-                    bestIndex = i;
-                }
-            }
-            closedCells.add(bestCell);//uzavření jelepší buňky
-            cellList.splice(bestIndex, 1);//odstranění nejlepší buňky z přístupných
-            if (bestCell === this.target) {
-                return bestCell;
-            }
+        while(cellHeap.count > 0) {
+            let bestCell = cellHeap.get();
+            closedCells.add(bestCell); //Locks the best cell from being evalueated again
+            if (bestCell === this.target) return bestCell;
             let neighbours = this.getNeighbours(bestCell);
             for (let i = 0; i < neighbours.length; i++) {
                 const neighbour = neighbours[i];
-                if (closedCells.has(neighbour)) continue;//ignorace již navštívených buňek
-                let inList = cellList.includes(neighbour);//zjištění, zda se soused již nachazí v dostupných buňkách
-                let startDistance = bestCell.startDistance + this.getDistance(neighbour, bestCell);//vyhodnocení vzdálenosti souseda od startu
+                if (closedCells.has(neighbour)) continue; //Ignores aleready evaluated cells
+                let inList = cellHeap.contains(neighbour);
+                let startDistance = bestCell.startDistance + this.getDistance(neighbour, bestCell);
                 if (!inList || startDistance < neighbour.startDistance) {
                     neighbour.startDistance = startDistance;
                     neighbour.endDistance = this.getDistance(neighbour, this.target);
                     neighbour.next = bestCell
-                    if (!inList) cellList.push(neighbour);
+                    cellHeap.add(neighbour);
                 }
             }
         }

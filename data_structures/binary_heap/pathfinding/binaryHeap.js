@@ -71,7 +71,7 @@ class BinaryHeap {
     }
 
     contains(item) {
-        return this.items[item.heapIndex] === item;
+        return this.items[item.heapIndex] === item && item.heapIndex < this.count;
     }
 
     swap(item1, item2) {
